@@ -19,7 +19,7 @@ def print_tic_tac_toe(values):
 # Function to print the score-board
 def print_scoreboard(score_board):
     
-    print("\t  SCOREBOARD  ")
+    print("\tSCOREBOARD  ")
  
     players = list(score_board.keys())
     print("\t   ", players[0], "\t    ", score_board[players[0]])
@@ -35,13 +35,13 @@ def check_win(position, user):
     for x in list:
         if all(y in position[user] for y in x):
  
-            # Return True if any winning combination satisfies
+            # Return True if win
             return True
-    # Return False if no combination is satisfied       
+    # Return False if winner isn't established       
     return False       
  
 # Function to check if the game is drawn
-def check_draw(position):
+def check_tie(position):
     #Counting markers
     if len(position['X']) + len(position['O']) == 9:
         return True
@@ -92,12 +92,12 @@ def single_game(user):
             print("\n")
             return user
  
-        # Function call for checking draw game
-        if check_draw(position):
+        # Function call for checking tie game
+        if check_tie(position):
             print_tic_tac_toe(values)
             print("Tie Game")
             print("\n")
-            return 'D'
+            return 'T'
             
  
         # Switch player moves
@@ -186,7 +186,7 @@ if __name__ == "__main__":
         winner = single_game(options[choice-1])
          
         # Upadates after Each win - Won't record ties
-        if winner != 'D' :
+        if winner != 'T' :
             player_won = player_choice[winner]
             score_board[player_won] = score_board[player_won] + 1
  
