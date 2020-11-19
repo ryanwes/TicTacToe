@@ -1,4 +1,4 @@
-# Function to print Tic Tac Toe
+# Format of board and Function to print Tic Tac Toe
 def print_tic_tac_toe(values):
     print("\n")
     print("\t     |     |")
@@ -18,25 +18,22 @@ def print_tic_tac_toe(values):
  
 # Function to print the score-board
 def print_scoreboard(score_board):
-    print("\t--------------------------------")
-    print("\t              SCOREBOARD       ")
-    print("\t--------------------------------")
+    
+    print("\t  SCOREBOARD  ")
  
     players = list(score_board.keys())
     print("\t   ", players[0], "\t    ", score_board[players[0]])
     print("\t   ", players[1], "\t    ", score_board[players[1]])
  
-    print("\t--------------------------------\n")
- 
 # Function to check if any player has won
-def check_win(player_pos, cur_player):
+def check_win(position, user):
  
     # All possible winning combinations
     list = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
  
-    # Loop to check if any winning combination is satisfied
+    # Loop check for winner
     for x in list:
-        if all(y in player_pos[cur_player] for y in x):
+        if all(y in position[user] for y in x):
  
             # Return True if any winning combination satisfies
             return True
@@ -44,19 +41,20 @@ def check_win(player_pos, cur_player):
     return False       
  
 # Function to check if the game is drawn
-def check_draw(player_pos):
-    if len(player_pos['X']) + len(player_pos['O']) == 9:
+def check_draw(position):
+    #Counting markers
+    if len(position['X']) + len(position['O']) == 9:
         return True
     return False       
  
 # Function for a single game of Tic Tac Toe
-def single_game(cur_player):
+def single_game(user):
  
-    # Represents the Tic Tac Toe
+    
     values = [' ' for x in range(9)]
      
     # Stores the positions occupied by X and O
-    player_pos = {'X':[], 'O':[]}
+    position = {'X':[], 'O':[]}
      
     # Game Loop for a single game of Tic Tac Toe
     while True:
@@ -64,39 +62,38 @@ def single_game(cur_player):
          
         # Try exception block for MOVE input
         try:
-            print("Player ", cur_player, " turn. Which box? : ", end="")
+            print("Choose position between 1-9")
+            print("Player ", user, " turn. Which box? : ", end="")
             move = int(input()) 
         except ValueError:
             print("Wrong Input!!! Try Again")
             continue
  
-        # Sanity check for MOVE inout
+        #Validate move is 1-9
         if move < 1 or move > 9:
             print("Wrong Input!!! Try Again")
             continue
  
-        # Check if the box is not occupied already
+        # Validate spot isn't taken
         if values[move-1] != ' ':
             print("Place already filled. Try again!!")
             continue
  
-        # Update game information
- 
         # Updating grid status 
-        values[move-1] = cur_player
+        values[move-1] = user
  
         # Updating player positions
-        player_pos[cur_player].append(move)
+        position[user].append(move)
  
         # Function call for checking win
-        if check_win(player_pos, cur_player):
+        if check_win(position, user):
             print_tic_tac_toe(values)
-            print("Player ", cur_player, " has won the game!!")     
+            print("Player ", user, " has won the game!!")     
             print("\n")
-            return cur_player
+            return user
  
         # Function call for checking draw game
-        if check_draw(player_pos):
+        if check_draw(position):
             print_tic_tac_toe(values)
             print("Tie Game")
             print("\n")
@@ -104,28 +101,29 @@ def single_game(cur_player):
             
  
         # Switch player moves
-        if cur_player == 'X':
-            cur_player = 'O'
+        if user == 'X':
+            user = 'O'
         else:
-            cur_player = 'X'
+            user = 'X'
  
 if __name__ == "__main__":
- 
+    
+    print("Play TicTacToe!!")
     print("Player 1")
-    player1 = input("Enter the name : ")
+    player1 = input("What is your name? : ")
     print("\n")
  
     print("Player 2")
-    player2 = input("Enter the name : ")
+    player2 = input("What is your name? : ")
     print("\n")
      
     # Stores the player who chooses X and O
-    cur_player = player1
+    user = player1
  
-    # Stores the choice of players
+    # Saves which marker each player has
     player_choice = {'X' : "", 'O' : ""}
  
-    # Stores the options
+    
     options = ['X', 'O']
  
     # Stores the scoreboard
@@ -136,14 +134,14 @@ if __name__ == "__main__":
     # The loop runs until the players quit 
     while True:
  
-        # Player choice Menu
+        # Player choice Menu - Listed here and below to draw user attention
         print("""
             ****Layout for Game****
             1 | 2 | 3
             4 | 5 | 6
             7 | 8 | 9
          """)
-        print("Turn to choose for", cur_player)
+        print("Turn to choose for", user)
         print("Enter 1 to be X")
         print("Enter 2 to be O")
         print("Enter 3 to Exit Game")
@@ -163,15 +161,15 @@ if __name__ == "__main__":
  
         # Conditions for player choice  
         if choice == 1:
-            player_choice['X'] = cur_player
-            if cur_player == player1:
+            player_choice['X'] = user
+            if user == player1:
                 player_choice['O'] = player2
             else:
                 player_choice['O'] = player1
  
         elif choice == 2:
-            player_choice['O'] = cur_player
-            if cur_player == player1:
+            player_choice['O'] = user
+            if user == player1:
                 player_choice['X'] = player2
             else:
                 player_choice['X'] = player1
@@ -187,14 +185,14 @@ if __name__ == "__main__":
         # Stores the winner in a single game of Tic Tac Toe
         winner = single_game(options[choice-1])
          
-        # Edits the scoreboard according to the winner
+        # Upadates after Each win - Won't record ties
         if winner != 'D' :
             player_won = player_choice[winner]
             score_board[player_won] = score_board[player_won] + 1
  
         print_scoreboard(score_board)
         # Switch player who chooses X or O
-        if cur_player == player1:
-            cur_player = player2
+        if user == player1:
+            user = player2
         else:
-            cur_player = player1
+            user = player1
