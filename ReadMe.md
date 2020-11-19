@@ -5,11 +5,14 @@ three in a row horizontally, vertically, or diagonally.  In the rare case of nei
 in a row the game is declared a draw.  There are two printed diagrams of the grid showing the layout for 
 moves given to the user, hopefully catching the users attention before the game starts.  
 
-The program covers the following features:
-    At least 3 functions returning value
-    List of values retreived from program
-    A chart that displays and tracks data (Score of TicTacToe games)
-    A loop that can continue to run but allows user option to exit
-    Invalid user input is programmed to be caught and user told to try different option.
 
-This program was designed for python 3.9 to run.
+The program covers the following features:
+    -At least 3 functions returning value
+    -List of values retreived from program
+    -A chart that displays and tracks data (The score of how many games have been won is tracked)
+    -A loop that can continue to run but allows user option to exit
+    -Invalid user input is programmed to be caught and user told to try different option.
+
+This program was designed for python 3 to run.
+Just open the folder with the file and run on console.
+Once inside the appp the flow and direction shoudld be simple
