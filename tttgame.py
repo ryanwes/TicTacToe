@@ -28,7 +28,7 @@ def print_scoreboard(score_board):
 # Function to check if any player has won
 def check_win(position, user):
  
-    # All possible winning combinations
+    # Checking for win (3 in a row vertical, horizonal, diagonal)
     list = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
  
     # Loop check for winner
@@ -40,7 +40,7 @@ def check_win(position, user):
     # Return False if winner isn't established       
     return False       
  
-# Function to check if the game is drawn
+# Function to check if the game is tie
 def check_tie(position):
     #Counting markers
     if len(position['X']) + len(position['O']) == 9:
@@ -56,11 +56,11 @@ def single_game(user):
     # Stores the positions occupied by X and O
     position = {'X':[], 'O':[]}
      
-    # Game Loop for a single game of Tic Tac Toe
+    # Loop for a single game of Tic Tac Toe
     while True:
         print_tic_tac_toe(values)
          
-        # Try exception block for MOVE input
+        # Verifies moves
         try:
             print("Choose position between 1-9")
             print("Player ", user, " turn. Which box? : ", end="")
@@ -100,7 +100,7 @@ def single_game(user):
             return 'T'
             
  
-        # Switch player moves
+        # Flipping player 
         if user == 'X':
             user = 'O'
         else:
@@ -121,7 +121,7 @@ if __name__ == "__main__":
     user = player1
  
     # Saves which marker each player has
-    player_choice = {'X' : "", 'O' : ""}
+    player_marker = {'X' : "", 'O' : ""}
  
     
     options = ['X', 'O']
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     # The loop runs until the players quit 
     while True:
  
-        # Player choice Menu - Listed here and below to draw user attention
+        # Player Menu - Listed here and below to draw user attention
         print("""
             ****Layout for Game****
             1 | 2 | 3
@@ -152,29 +152,29 @@ if __name__ == "__main__":
             7 | 8 | 9
          """)
  
-        # Try exception for CHOICE input
+        # Function for marker
         try:
-            choice = int(input())   
+            marker = int(input())   
         except ValueError:
             print("Unacceptable Input")
             continue
  
-        # Conditions for player choice  
-        if choice == 1:
-            player_choice['X'] = user
+        # statements for player marker  
+        if marker == 1:
+            player_marker['X'] = user
             if user == player1:
-                player_choice['O'] = player2
+                player_marker['O'] = player2
             else:
-                player_choice['O'] = player1
+                player_marker['O'] = player1
  
-        elif choice == 2:
-            player_choice['O'] = user
+        elif marker == 2:
+            player_marker['O'] = user
             if user == player1:
-                player_choice['X'] = player2
+                player_marker['X'] = player2
             else:
-                player_choice['X'] = player1
+                player_marker['X'] = player1
          
-        elif choice == 3:
+        elif marker == 3:
             print("Final Scores")
             print_scoreboard(score_board)
             break  
@@ -182,12 +182,12 @@ if __name__ == "__main__":
         else:
             print("Wrong Choice!!!! Try Again\n")
  
-        # Stores the winner in a single game of Tic Tac Toe
-        winner = single_game(options[choice-1])
+        # Saves winner of game
+        winner = single_game(options[marker-1])
          
         # Upadates after Each win - Won't record ties
         if winner != 'T' :
-            player_won = player_choice[winner]
+            player_won = player_marker[winner]
             score_board[player_won] = score_board[player_won] + 1
  
         print_scoreboard(score_board)
