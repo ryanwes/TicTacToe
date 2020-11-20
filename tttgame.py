@@ -18,8 +18,8 @@ def print_tic_tac_toe(values):
  
 # Function to print the score-board
 def print_scoreboard(score_board):
-    
-    print("\tSCOREBOARD  ")
+
+    print("\t    | SCOREBOARD | ")
  
     players = list(score_board.keys())
     print("\t   ", players[0], "\t    ", score_board[players[0]])
